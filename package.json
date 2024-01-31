@@ -18,7 +18,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "rollup": "^4.9.6"
+    "rollup": "^4.9.6",
+    "typescript": "5.3.3"
   },
   "dependencies": {
     "@rollup/plugin-node-resolve": "^15.2.3",
