@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "outDir": ".tempDist",
+    "target": "ES5"
+  },
+
+  "include": ["types.d.ts", "src/**/*"]
+}

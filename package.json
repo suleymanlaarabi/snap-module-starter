@@ -1,0 +1,27 @@
+{
+  "name": "snap-module-starter",
+  "snapModule": {
+    "name": "SnapModuleName",
+    "displayName": "SnapModuleDisplayName",
+    "description": "SnapModuleDescription",
+    "version": "1.0",
+    "author": "YOU"
+  },
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "tsc-watch --module ES6 --onSuccess \"./onSuccess.sh\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "rollup": "^4.9.6"
+  },
+  "dependencies": {
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "tsc-watch": "^6.0.4"
+  }
+}
