@@ -2,7 +2,8 @@
 rollup -c
 
 fichier_js="./dist/bundle.js"
-name=$(jq -r ".snapModule.name" "./package.json")
+name_temp=$(jq -r ".snapModule.name" "./package.json")
+name=$(echo "$name_temp" | tr '[:upper:]' '[:lower:]')
 displayName=$(jq -r ".snapModule.displayName" "./package.json")
 description=$(jq -r ".snapModule.description" "./package.json")
 version=$(jq -r ".snapModule.version" "./package.json")
@@ -10,11 +11,11 @@ author=$(jq -r ".snapModule.author" "./package.json")
 
 
 headers="// ==SE_module==
-// name: ai_responds
-// displayName: AI Responds
-// description: an ai for responding to messages
-// version: 1.0
-// author: Suleyman Laarabi
+// name: $name
+// displayName: $displayName
+// description: $description
+// version: $version
+// author: $author
 // ==/SE_module==
 
 var networking = require(\"networking\");
@@ -34,3 +35,5 @@ tempfile=$(mktemp)
 echo "$headers" > "$tempfile"
 cat "$fichier_js" >> "$tempfile"
 mv "$tempfile" "$fichier_js"
+
+adb push ./dist/bundle.js /sdcard/snapModule/$name.js

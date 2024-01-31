@@ -1,0 +1,3 @@
+export var onSnapActivityLoadCalls = {
+    events: [],
+};

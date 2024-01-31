@@ -1,8 +1,8 @@
 {
   "name": "snap-module-starter",
   "snapModule": {
-    "name": "SnapModuleName",
-    "displayName": "SnapModuleDisplayName",
+    "name": "Valorant",
+    "displayName": "Valorant",
     "description": "SnapModuleDescription",
     "version": "1.0",
     "author": "YOU"
