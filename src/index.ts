@@ -3,9 +3,17 @@ import { AndroidActivity } from "../types/android/app/Activity";
 import { AndroidContentContext } from "../types/android/content/Context";
 import start from "./app";
 import {
-  conversationToolboxContext,
   IConversationToolboxContext,
+  conversationToolboxContext,
 } from "./context/conversationToolboxContext";
+import {
+  IFriendFeedContext,
+  friendFeedContext,
+} from "./context/friendFeedContext";
+import {
+  ISettingsContext,
+  settingsContext,
+} from "./context/settingsModuleContext";
 
 import {
   ISnapActivityContext,
@@ -31,6 +39,8 @@ export interface StartFunctionProps {
   snapApplicationContext: ISnapApplicationContext;
   snapEnhancerContext: ISnapEnhancerContext;
   conversationToolboxContext: IConversationToolboxContext;
+  friendFeedContext: IFriendFeedContext;
+  settingsContext: ISettingsContext;
 }
 
 start({
@@ -38,6 +48,8 @@ start({
   snapApplicationContext,
   snapEnhancerContext,
   conversationToolboxContext,
+  friendFeedContext,
+  settingsContext,
 });
 
 module.onSnapMainActivityCreate = (activity: AndroidActivity) => {
@@ -63,6 +75,18 @@ module.onSnapEnhanceLoad = (context: AndroidContentContext) => {
 
 im.create(EnumUI.CONVERSATION_TOOLBOX, (builder) => {
   conversationToolboxContext.events.forEach((event) => {
+    event.start(builder);
+  });
+});
+
+im.create(EnumUI.FRIEND_FEED_CONTEXT_MENU, (builder) => {
+  friendFeedContext.events.forEach((event) => {
+    event.start(builder);
+  });
+});
+
+im.create(EnumUI.SETTINGS, (builder) => {
+  settingsContext.events.forEach((event) => {
     event.start(builder);
   });
 });

@@ -1,7 +1,7 @@
 import { EnumUI } from "../data.types/interface-manager";
-import { snapApplicationContext } from "../src/context/snapApplicationContext";
+import { StartFunctionProps } from "../src/index";
 
-export default function start() {
+export default function start({ snapApplicationContext }: StartFunctionProps) {
   snapApplicationContext.events.push({
     start: (context) => {
       im.create(EnumUI.CONVERSATION_TOOLBOX, (builder, args) => {

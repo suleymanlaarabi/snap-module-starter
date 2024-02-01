@@ -1,5 +1,5 @@
-import { snapApplicationContext } from "../src/context/snapApplicationContext";
-export default function start() {
+export default function start(_a) {
+    var snapApplicationContext = _a.snapApplicationContext;
     snapApplicationContext.events.push({
         start: function (context) {
             im.create("conversationToolbox" /* EnumUI.CONVERSATION_TOOLBOX */, function (builder, args) {

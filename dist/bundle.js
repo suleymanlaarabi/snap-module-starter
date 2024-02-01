@@ -33,15 +33,24 @@ var hooker = require("hooker");
         return null;
     }
 
-    function start(props) {
-        props.snapActivityContext.events.push({
+    function start(_a) {
+        var snapActivityContext = _a.snapActivityContext, conversationToolboxContext = _a.conversationToolboxContext, settingsContext = _a.settingsContext;
+        snapActivityContext.events.push({
             start: function (activity) {
                 shortToast("Snap Activiter launched: " + getMyUserId(activity));
             },
         });
-        props.conversationToolboxContext.events.push({
+        conversationToolboxContext.events.push({
             start: function (builder) {
                 shortToast("Conversation toolbox opened");
+                builder.button("Hello World !", function () {
+                    shortToast("Hello World !");
+                });
+            },
+        });
+        settingsContext.events.push({
+            start: function (builder) {
+                shortToast("Settings opened");
                 builder.button("Hello World !", function () {
                     shortToast("Hello World !");
                 });
@@ -50,6 +59,14 @@ var hooker = require("hooker");
     }
 
     var conversationToolboxContext = {
+        events: [],
+    };
+
+    var friendFeedContext = {
+        events: [],
+    };
+
+    var settingsContext = {
         events: [],
     };
 
@@ -73,6 +90,8 @@ var hooker = require("hooker");
         snapApplicationContext: snapApplicationContext,
         snapEnhancerContext: snapEnhancerContext,
         conversationToolboxContext: conversationToolboxContext,
+        friendFeedContext: friendFeedContext,
+        settingsContext: settingsContext,
     });
     module.onSnapMainActivityCreate = function (activity) {
         snapActivityContext.activity = activity;
@@ -94,6 +113,16 @@ var hooker = require("hooker");
     };
     im.create("conversationToolbox" /* EnumUI.CONVERSATION_TOOLBOX */, function (builder) {
         conversationToolboxContext.events.forEach(function (event) {
+            event.start(builder);
+        });
+    });
+    im.create("friendFeedContextMenu" /* EnumUI.FRIEND_FEED_CONTEXT_MENU */, function (builder) {
+        friendFeedContext.events.forEach(function (event) {
+            event.start(builder);
+        });
+    });
+    im.create("settings" /* EnumUI.SETTINGS */, function (builder) {
+        settingsContext.events.forEach(function (event) {
             event.start(builder);
         });
     });

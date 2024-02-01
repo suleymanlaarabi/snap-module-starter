@@ -38,16 +38,16 @@ export interface Websocket {
 }
 
 export interface WebsocketListener {
-  onOpen(websocket: Websocket, response: NetworksResponse): void;
-  onClosed(websocket: Websocket, code: number, reason: string): void;
-  onClosing(websocket: Websocket, code: number, reason: string): void;
-  onFailure(
+  onOpen?: (websocket: Websocket, response: NetworksResponse) => void;
+  onClosed?: (websocket: Websocket, code: number, reason: string) => void;
+  onClosing?: (websocket: Websocket, code: number, reason: string) => void;
+  onFailure?: (
     websocket: Websocket,
     throwable: any,
     response: NetworksResponse | undefined
-  ): void;
-  onMessageBytes(websocket: Websocket, bytes: any): void; // byte[]
-  onMessageText(websocket: Websocket, text: string): void;
+  ) => void;
+  onMessageBytes?: (websocket: Websocket, bytes: any) => void; // byte[]
+  onMessageText?: (websocket: Websocket, text: string) => void;
 }
 
 export interface Networking {

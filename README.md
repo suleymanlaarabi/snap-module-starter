@@ -28,7 +28,7 @@ npm run start
 
 - dans le fichier src/app.ts
 
-  affichier un toast "Hello Wordl !"
+  afficher un toast "Hello Wordl !"
 
 ```typescript
 export default function start() {
@@ -38,7 +38,7 @@ export default function start() {
 
 ---
 
-- dans le fichier src/app.ts
+- dans le ficher src/app.ts
 
   se connecter a plusieurs événements
 
