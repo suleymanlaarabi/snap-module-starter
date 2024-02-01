@@ -1,7 +1,9 @@
+import { AndroidActivity } from "../types/android/app/Activity";
+import { AndroidContentContext } from "../types/android/content/Context";
 import start from "./app";
-import { onSnapApplicationLoadCalls } from "./loader/snapApplicationLoader";
-import { onSnapEnhancerLoadCalls } from "./loader/snapEnhanceLoader";
-import { onSnapActivityLoadCalls } from "./loader/snapMainActivityLoader";
+import { snapActivityContext } from "./context/snapActivityContext";
+import { snapApplicationContext } from "./context/snapApplicationContext";
+import { snapEnhancerContext } from "./context/snapEnhancerContext";
 
 /*
 -----------------------------------------------------
@@ -12,19 +14,22 @@ import { onSnapActivityLoadCalls } from "./loader/snapMainActivityLoader";
 start();
 
 module.onSnapMainActivityCreate = (activity: AndroidActivity) => {
-  onSnapActivityLoadCalls.events.forEach((event) => {
-    event();
+  snapActivityContext.activity = activity;
+  snapActivityContext.events.forEach((event) => {
+    event(activity);
   });
 };
 
-module.onSnapApplicationLoad = (context) => {
-  onSnapApplicationLoadCalls.events.forEach((event) => {
-    event();
+module.onSnapApplicationLoad = (context: AndroidContentContext) => {
+  snapApplicationContext.context = context;
+  snapApplicationContext.events.forEach((event) => {
+    event(context);
   });
 };
 
-module.onSnapEnhanceLoad = (context: any) => {
-  onSnapEnhancerLoadCalls.events.forEach((event) => {
-    event();
+module.onSnapEnhanceLoad = (context: AndroidContentContext) => {
+  snapEnhancerContext.context = context;
+  snapEnhancerContext.events.forEach((event) => {
+    event(context);
   });
 };

@@ -1,14 +1,15 @@
-import { onSnapApplicationLoadCalls } from "./loader/snapApplicationLoader";
-import { onSnapEnhancerLoadCalls } from "./loader/snapEnhanceLoader";
-import { onSnapActivityLoadCalls } from "./loader/snapMainActivityLoader";
+import getMyUserId from "./common/user/useUser";
+import { snapActivityContext } from "./context/snapActivityContext";
+import { snapApplicationContext } from "./context/snapApplicationContext";
+import { snapEnhancerContext } from "./context/snapEnhancerContext";
 export default function start() {
-    onSnapActivityLoadCalls.events.push(function () {
-        shortToast("Snap Activiter launched");
+    snapActivityContext.events.push((activity) => {
+        shortToast("Snap Activiter launched: " + getMyUserId(activity));
     });
-    onSnapApplicationLoadCalls.events.push(function () {
+    snapApplicationContext.events.push(() => {
         shortToast("Snap app launched");
     });
-    onSnapEnhancerLoadCalls.events.push(function () {
+    snapEnhancerContext.events.push(() => {
         shortToast("SnapEnhance launched");
     });
 }

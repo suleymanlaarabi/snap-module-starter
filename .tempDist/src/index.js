@@ -1,25 +1,28 @@
 import start from "./app";
-import { onSnapApplicationLoadCalls } from "./loader/snapApplicationLoader";
-import { onSnapEnhancerLoadCalls } from "./loader/snapEnhanceLoader";
-import { onSnapActivityLoadCalls } from "./loader/snapMainActivityLoader";
+import { snapActivityContext } from "./context/snapActivityContext";
+import { snapApplicationContext } from "./context/snapApplicationContext";
+import { snapEnhancerContext } from "./context/snapEnhancerContext";
 /*
 -----------------------------------------------------
 ----DO NOT MODIFY THIS FILE WRITE YOUR CODE IN APP---
 -----------------------------------------------------
 */
 start();
-module.onSnapMainActivityCreate = function (activity) {
-    onSnapActivityLoadCalls.events.forEach(function (event) {
-        event();
+module.onSnapMainActivityCreate = (activity) => {
+    snapActivityContext.activity = activity;
+    snapActivityContext.events.forEach((event) => {
+        event(activity);
     });
 };
-module.onSnapApplicationLoad = function (context) {
-    onSnapApplicationLoadCalls.events.forEach(function (event) {
-        event();
+module.onSnapApplicationLoad = (context) => {
+    snapApplicationContext.context = context;
+    snapApplicationContext.events.forEach((event) => {
+        event(context);
     });
 };
-module.onSnapEnhanceLoad = function (context) {
-    onSnapEnhancerLoadCalls.events.forEach(function (event) {
-        event();
+module.onSnapEnhanceLoad = (context) => {
+    snapEnhancerContext.context = context;
+    snapEnhancerContext.events.forEach((event) => {
+        event(context);
     });
 };

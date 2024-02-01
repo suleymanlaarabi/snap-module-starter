@@ -1,16 +1,16 @@
-export enum EnumUI {
+export const enum EnumUI {
   SETTINGS = "settings",
   FRIEND_FEED_CONTEXT_MENU = "friendFeedContextMenu",
-  CONVERSATION_TOOLBOC = "conversationToolbox",
+  CONVERSATION_TOOLBOX = "conversationToolbox",
 }
 
-export enum EnumPos {
+export const enum EnumPos {
   START = "start",
   END = "end",
   TOP = "top",
   BOTTOM = "bottom",
 }
-export enum EnumPosArrangment {
+export const enum EnumPosArrangment {
   START = "start",
   END = "end",
   TOP = "top",
@@ -20,7 +20,7 @@ export enum EnumPosArrangment {
   SPACE_AROUND = "spaceAround",
   SPACE_EVENLY = "spaceEvenly",
 }
-export enum EnumPosAlignment {
+export const enum EnumPosAlignment {
   START = "start",
   END = "end",
   TOP = "top",

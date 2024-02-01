@@ -1,4 +1,4 @@
-export enum stage {
+export const enum Stage {
   BEFORE = "before",
   AFTER = "after",
 }
@@ -41,27 +41,27 @@ export interface Hooker {
     types: string[]
   ): any | undefined;
 
-  hook(method: any, stage: stage, callback: HookCallback): HookUnhook;
+  hook(method: any, stage: Stage, callback: HookCallback): HookUnhook;
   hookAllMethods(
     clazz: Class<any>,
     methodName: string,
-    stage: stage,
+    stage: Stage,
     callback: HookCallback
   ): HookUnhook;
   hookAllConstructors(
     clazz: Class<any>,
-    stage: stage,
+    stage: Stage,
     callback: HookCallback
   ): HookUnhook;
   hookAllMethods(
     className: string,
     methodName: string,
-    stage: stage,
+    stage: Stage,
     callback: HookCallback
   ): HookUnhook | undefined;
   hookAllConstructors(
     className: string,
-    stage: stage,
+    stage: Stage,
     callback: HookCallback
   ): HookUnhook | undefined;
 }

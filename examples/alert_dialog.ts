@@ -1,9 +1,9 @@
 import getMyUserId from "../src/common/user/useUser";
-import { onSnapActivityLoadCalls } from "../src/loader/snapMainActivityLoader";
+import { snapActivityContext } from "../src/context/snapActivityContext";
 import { AndroidActivity } from "../types/android/app/Activity";
 
 export default function start() {
-  onSnapActivityLoadCalls.events.push((activity: AndroidActivity) => {
+  snapActivityContext.events.push((activity: AndroidActivity) => {
     const myUserId = getMyUserId(activity);
 
     activity.runOnUiThread(

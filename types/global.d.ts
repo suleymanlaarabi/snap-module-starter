@@ -16,6 +16,10 @@ declare global {
   const messaging: Messaging;
   const hooker: Hooker;
 
+  interface Array<T> {
+    size: () => number;
+  }
+
   interface JavaType {
     newInstance(...args: any[]): any;
   }

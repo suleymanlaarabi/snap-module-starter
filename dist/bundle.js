@@ -12,30 +12,50 @@ var config = require("config");
 var im = require("interface-manager");
 var ipc = require("ipc");
 var javaInterface = require("java-interfaces");
+var hooker = require("hooker");
+
 
 (function () {
     'use strict';
 
-    var onSnapApplicationLoadCalls = {
+    function getMyUserId(context) {
+        const database = context.openOrCreateDatabase("arroyo.db", 0, null);
+        const cursor = database.rawQuery("SELECT value FROM required_values WHERE key = 'USERID'", null);
+        try {
+            if (cursor.moveToFirst()) {
+                return cursor.getString(0);
+            }
+        }
+        finally {
+            cursor.close();
+            database.close();
+        }
+        return null;
+    }
+
+    const snapActivityContext = {
+        activity: null,
         events: [],
     };
 
-    var onSnapEnhancerLoadCalls = {
+    const snapApplicationContext = {
+        context: null,
         events: [],
     };
 
-    var onSnapActivityLoadCalls = {
+    const snapEnhancerContext = {
+        context: null,
         events: [],
     };
 
     function start() {
-        onSnapActivityLoadCalls.events.push(function () {
-            shortToast("Snap Activiter launched");
+        snapActivityContext.events.push((activity) => {
+            shortToast("Snap Activiter launched: " + getMyUserId(activity));
         });
-        onSnapApplicationLoadCalls.events.push(function () {
+        snapApplicationContext.events.push(() => {
             shortToast("Snap app launched");
         });
-        onSnapEnhancerLoadCalls.events.push(function () {
+        snapEnhancerContext.events.push(() => {
             shortToast("SnapEnhance launched");
         });
     }
@@ -46,19 +66,22 @@ var javaInterface = require("java-interfaces");
     -----------------------------------------------------
     */
     start();
-    module.onSnapMainActivityCreate = function (activity) {
-        onSnapActivityLoadCalls.events.forEach(function (event) {
-            event();
+    module.onSnapMainActivityCreate = (activity) => {
+        snapActivityContext.activity = activity;
+        snapActivityContext.events.forEach((event) => {
+            event(activity);
         });
     };
-    module.onSnapApplicationLoad = function (context) {
-        onSnapApplicationLoadCalls.events.forEach(function (event) {
-            event();
+    module.onSnapApplicationLoad = (context) => {
+        snapApplicationContext.context = context;
+        snapApplicationContext.events.forEach((event) => {
+            event(context);
         });
     };
-    module.onSnapEnhanceLoad = function (context) {
-        onSnapEnhancerLoadCalls.events.forEach(function (event) {
-            event();
+    module.onSnapEnhanceLoad = (context) => {
+        snapEnhancerContext.context = context;
+        snapEnhancerContext.events.forEach((event) => {
+            event(context);
         });
     };
 

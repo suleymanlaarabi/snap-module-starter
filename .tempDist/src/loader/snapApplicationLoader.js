@@ -1,3 +1,3 @@
-export var onSnapApplicationLoadCalls = {
+export const onSnapApplicationLoadCalls = {
     events: [],
 };

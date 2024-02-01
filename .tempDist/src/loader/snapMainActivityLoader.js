@@ -1,3 +1,4 @@
-export var onSnapActivityLoadCalls = {
+export const onSnapActivityLoadCalls = {
+    activity: null,
     events: [],
 };
