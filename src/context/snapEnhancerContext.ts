@@ -1,8 +1,9 @@
 import { AndroidContentContext } from "../../types/android/content/Context";
+import { ICommonContextEvents } from "./ContextTypes";
 
-interface ISnapEnhancerContext {
-  context: AndroidContentContext | null;
-  events: Array<(context: AndroidContentContext) => void>;
+export interface ISnapEnhancerContext {
+  context: AndroidContentContext;
+  events: Array<ICommonContextEvents<AndroidContentContext>>;
 }
 
 export const snapEnhancerContext: ISnapEnhancerContext = {

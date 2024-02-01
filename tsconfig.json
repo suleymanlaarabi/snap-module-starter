@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "outDir": ".tempDist",
-    "target": "ES6",
+    "target": "ES5",
     "typeRoots": ["types/*"]
   },
 

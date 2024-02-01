@@ -1,6 +1,6 @@
 // ==SE_module==
-// name: valorant
-// displayName: Valorant
+// name: snap_module_name
+// displayName: SnapModuleName
 // description: SnapModuleDescription
 // version: 1.0
 // author: YOU
@@ -19,8 +19,8 @@ var hooker = require("hooker");
     'use strict';
 
     function getMyUserId(context) {
-        const database = context.openOrCreateDatabase("arroyo.db", 0, null);
-        const cursor = database.rawQuery("SELECT value FROM required_values WHERE key = 'USERID'", null);
+        var database = context.openOrCreateDatabase("arroyo.db", 0, null);
+        var cursor = database.rawQuery("SELECT value FROM required_values WHERE key = 'USERID'", null);
         try {
             if (cursor.moveToFirst()) {
                 return cursor.getString(0);
@@ -33,56 +33,69 @@ var hooker = require("hooker");
         return null;
     }
 
-    const snapActivityContext = {
+    function start(props) {
+        props.snapActivityContext.events.push({
+            start: function (activity) {
+                shortToast("Snap Activiter launched: " + getMyUserId(activity));
+            },
+        });
+        props.conversationToolboxContext.events.push({
+            start: function (builder) {
+                shortToast("Conversation toolbox opened");
+                builder.button("Hello World !", function () {
+                    shortToast("Hello World !");
+                });
+            },
+        });
+    }
+
+    var conversationToolboxContext = {
+        events: [],
+    };
+
+    var snapActivityContext = {
         activity: null,
         events: [],
     };
 
-    const snapApplicationContext = {
+    var snapApplicationContext = {
         context: null,
         events: [],
     };
 
-    const snapEnhancerContext = {
+    var snapEnhancerContext = {
         context: null,
         events: [],
     };
 
-    function start() {
-        snapActivityContext.events.push((activity) => {
-            shortToast("Snap Activiter launched: " + getMyUserId(activity));
-        });
-        snapApplicationContext.events.push(() => {
-            shortToast("Snap app launched");
-        });
-        snapEnhancerContext.events.push(() => {
-            shortToast("SnapEnhance launched");
-        });
-    }
-
-    /*
-    -----------------------------------------------------
-    ----DO NOT MODIFY THIS FILE WRITE YOUR CODE IN APP---
-    -----------------------------------------------------
-    */
-    start();
-    module.onSnapMainActivityCreate = (activity) => {
+    start({
+        snapActivityContext: snapActivityContext,
+        snapApplicationContext: snapApplicationContext,
+        snapEnhancerContext: snapEnhancerContext,
+        conversationToolboxContext: conversationToolboxContext,
+    });
+    module.onSnapMainActivityCreate = function (activity) {
         snapActivityContext.activity = activity;
-        snapActivityContext.events.forEach((event) => {
-            event(activity);
+        snapActivityContext.events.forEach(function (event) {
+            event.start(activity);
         });
     };
-    module.onSnapApplicationLoad = (context) => {
+    module.onSnapApplicationLoad = function (context) {
         snapApplicationContext.context = context;
-        snapApplicationContext.events.forEach((event) => {
-            event(context);
+        snapApplicationContext.events.forEach(function (event) {
+            event.start(context);
         });
     };
-    module.onSnapEnhanceLoad = (context) => {
+    module.onSnapEnhanceLoad = function (context) {
         snapEnhancerContext.context = context;
-        snapEnhancerContext.events.forEach((event) => {
-            event(context);
+        snapEnhancerContext.events.forEach(function (event) {
+            event.start(context);
         });
     };
+    im.create("conversationToolbox" /* EnumUI.CONVERSATION_TOOLBOX */, function (builder) {
+        conversationToolboxContext.events.forEach(function (event) {
+            event.start(builder);
+        });
+    });
 
 })();

@@ -3,17 +3,19 @@ import { snapActivityContext } from "../src/context/snapActivityContext";
 import { AndroidActivity } from "../types/android/app/Activity";
 
 export default function start() {
-  snapActivityContext.events.push((activity: AndroidActivity) => {
-    const myUserId = getMyUserId(activity);
+  snapActivityContext.events.push({
+    start: (activity: AndroidActivity) => {
+      const myUserId = getMyUserId(activity);
 
-    activity.runOnUiThread(
-      javaInterfaces.runnable(() => {
-        var myDialog = im.createAlertDialog(activity, (builder, dialog) => {
-          builder.text("My User Id is : " + myUserId);
-        });
+      activity.runOnUiThread(
+        javaInterfaces.runnable(() => {
+          var myDialog = im.createAlertDialog(activity, (builder, dialog) => {
+            builder.text("My User Id is : " + myUserId);
+          });
 
-        myDialog.show();
-      })
-    );
+          myDialog.show();
+        })
+      );
+    },
   });
 }

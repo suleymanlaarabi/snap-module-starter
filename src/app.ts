@@ -1,17 +1,18 @@
 import getMyUserId from "./common/user/useUser";
-import { snapActivityContext } from "./context/snapActivityContext";
-import { snapApplicationContext } from "./context/snapApplicationContext";
-import { snapEnhancerContext } from "./context/snapEnhancerContext";
+import { StartFunctionProps } from "./index";
 
-export default function start() {
-  snapActivityContext.events.push((activity) => {
-    shortToast("Snap Activiter launched: " + getMyUserId(activity));
+export default function start(props: StartFunctionProps) {
+  props.snapActivityContext.events.push({
+    start: (activity) => {
+      shortToast("Snap Activiter launched: " + getMyUserId(activity));
+    },
   });
-
-  snapApplicationContext.events.push(() => {
-    shortToast("Snap app launched");
-  });
-  snapEnhancerContext.events.push(() => {
-    shortToast("SnapEnhance launched");
+  props.conversationToolboxContext.events.push({
+    start: (builder) => {
+      shortToast("Conversation toolbox opened");
+      builder.button("Hello World !", () => {
+        shortToast("Hello World !");
+      });
+    },
   });
 }

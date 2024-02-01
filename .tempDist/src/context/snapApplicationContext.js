@@ -1,4 +1,4 @@
-export const snapApplicationContext = {
+export var snapApplicationContext = {
     context: null,
     events: [],
 };

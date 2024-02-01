@@ -1,28 +1,34 @@
 import start from "./app";
-import { snapActivityContext } from "./context/snapActivityContext";
-import { snapApplicationContext } from "./context/snapApplicationContext";
-import { snapEnhancerContext } from "./context/snapEnhancerContext";
-/*
------------------------------------------------------
-----DO NOT MODIFY THIS FILE WRITE YOUR CODE IN APP---
------------------------------------------------------
-*/
-start();
-module.onSnapMainActivityCreate = (activity) => {
+import { conversationToolboxContext, } from "./context/conversationToolboxContext";
+import { snapActivityContext, } from "./context/snapActivityContext";
+import { snapApplicationContext, } from "./context/snapApplicationContext";
+import { snapEnhancerContext, } from "./context/snapEnhancerContext";
+start({
+    snapActivityContext: snapActivityContext,
+    snapApplicationContext: snapApplicationContext,
+    snapEnhancerContext: snapEnhancerContext,
+    conversationToolboxContext: conversationToolboxContext,
+});
+module.onSnapMainActivityCreate = function (activity) {
     snapActivityContext.activity = activity;
-    snapActivityContext.events.forEach((event) => {
-        event(activity);
+    snapActivityContext.events.forEach(function (event) {
+        event.start(activity);
     });
 };
-module.onSnapApplicationLoad = (context) => {
+module.onSnapApplicationLoad = function (context) {
     snapApplicationContext.context = context;
-    snapApplicationContext.events.forEach((event) => {
-        event(context);
+    snapApplicationContext.events.forEach(function (event) {
+        event.start(context);
     });
 };
-module.onSnapEnhanceLoad = (context) => {
+module.onSnapEnhanceLoad = function (context) {
     snapEnhancerContext.context = context;
-    snapEnhancerContext.events.forEach((event) => {
-        event(context);
+    snapEnhancerContext.events.forEach(function (event) {
+        event.start(context);
     });
 };
+im.create("conversationToolbox" /* EnumUI.CONVERSATION_TOOLBOX */, function (builder) {
+    conversationToolboxContext.events.forEach(function (event) {
+        event.start(builder);
+    });
+});

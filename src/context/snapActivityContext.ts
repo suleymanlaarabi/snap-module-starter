@@ -1,8 +1,9 @@
 import { AndroidActivity } from "../../types/android/app/Activity";
+import { ICommonContextEvents } from "./ContextTypes";
 
-interface ISnapActivityContext {
-  activity: AndroidActivity | null;
-  events: Array<(activity: AndroidActivity) => void>;
+export interface ISnapActivityContext {
+  activity: AndroidActivity;
+  events: Array<ICommonContextEvents<AndroidActivity>>;
 }
 
 export const snapActivityContext: ISnapActivityContext = {

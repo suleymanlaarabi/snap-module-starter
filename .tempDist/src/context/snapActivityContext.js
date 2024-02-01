@@ -1,4 +1,4 @@
-export const snapActivityContext = {
+export var snapActivityContext = {
     activity: null,
     events: [],
 };
