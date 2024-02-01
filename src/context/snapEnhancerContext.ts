@@ -3,7 +3,7 @@ import { ICommonContextEvents } from "./ContextTypes";
 
 export interface ISnapEnhancerContext {
   context: AndroidContentContext;
-  events: Array<ICommonContextEvents<AndroidContentContext>>;
+  events: Array<ICommonContextEvents<AndroidContentContext, any>>;
 }
 
 export const snapEnhancerContext: ISnapEnhancerContext = {

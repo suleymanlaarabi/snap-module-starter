@@ -85,10 +85,15 @@ var hooker = require("hooker");
         events: [],
     };
 
+    var unloadContext = {
+        events: [],
+    };
+
     start({
         snapActivityContext: snapActivityContext,
         snapApplicationContext: snapApplicationContext,
         snapEnhancerContext: snapEnhancerContext,
+        unloadContext: unloadContext,
         conversationToolboxContext: conversationToolboxContext,
         friendFeedContext: friendFeedContext,
         settingsContext: settingsContext,
@@ -96,34 +101,39 @@ var hooker = require("hooker");
     module.onSnapMainActivityCreate = function (activity) {
         snapActivityContext.activity = activity;
         snapActivityContext.events.forEach(function (event) {
-            event.start(activity);
+            event.start(activity, null);
         });
     };
     module.onSnapApplicationLoad = function (context) {
         snapApplicationContext.context = context;
         snapApplicationContext.events.forEach(function (event) {
-            event.start(context);
+            event.start(context, null);
         });
     };
     module.onSnapEnhanceLoad = function (context) {
         snapEnhancerContext.context = context;
         snapEnhancerContext.events.forEach(function (event) {
-            event.start(context);
+            event.start(context, null);
         });
     };
-    im.create("conversationToolbox" /* EnumUI.CONVERSATION_TOOLBOX */, function (builder) {
+    module.onUnload = function () {
+        unloadContext.events.forEach(function (event) {
+            event.start(null, null);
+        });
+    };
+    im.create("conversationToolbox" /* EnumUI.CONVERSATION_TOOLBOX */, function (builder, args) {
         conversationToolboxContext.events.forEach(function (event) {
-            event.start(builder);
+            event.start(builder, args);
         });
     });
-    im.create("friendFeedContextMenu" /* EnumUI.FRIEND_FEED_CONTEXT_MENU */, function (builder) {
+    im.create("friendFeedContextMenu" /* EnumUI.FRIEND_FEED_CONTEXT_MENU */, function (builder, args) {
         friendFeedContext.events.forEach(function (event) {
-            event.start(builder);
+            event.start(builder, args);
         });
     });
-    im.create("settings" /* EnumUI.SETTINGS */, function (builder) {
+    im.create("settings" /* EnumUI.SETTINGS */, function (builder, args) {
         settingsContext.events.forEach(function (event) {
-            event.start(builder);
+            event.start(builder, args);
         });
     });
 

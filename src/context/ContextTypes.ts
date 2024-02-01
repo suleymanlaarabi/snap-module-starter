@@ -4,8 +4,8 @@ import { ISnapActivityContext } from "./snapActivityContext";
 import { ISnapApplicationContext } from "./snapApplicationContext";
 import { ISnapEnhancerContext } from "./snapEnhancerContext";
 
-export interface ICommonContextEvents<StartContext> {
-  start: (startContext: StartContext) => void;
+export interface ICommonContextEvents<StartContext, args> {
+  start: (startContext: StartContext, args: args | null) => void;
 }
 
 export type DefaultContext =

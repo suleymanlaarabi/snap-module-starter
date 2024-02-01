@@ -27,6 +27,7 @@ import {
   ISnapEnhancerContext,
   snapEnhancerContext,
 } from "./context/snapEnhancerContext";
+import { IUnloadContext, unloadContext } from "./context/unloadContext";
 
 /*
 -----------------------------------------------------
@@ -38,6 +39,8 @@ export interface StartFunctionProps {
   snapActivityContext: ISnapActivityContext;
   snapApplicationContext: ISnapApplicationContext;
   snapEnhancerContext: ISnapEnhancerContext;
+  unloadContext: IUnloadContext;
+
   conversationToolboxContext: IConversationToolboxContext;
   friendFeedContext: IFriendFeedContext;
   settingsContext: ISettingsContext;
@@ -47,6 +50,7 @@ start({
   snapActivityContext,
   snapApplicationContext,
   snapEnhancerContext,
+  unloadContext,
   conversationToolboxContext,
   friendFeedContext,
   settingsContext,
@@ -55,38 +59,44 @@ start({
 module.onSnapMainActivityCreate = (activity: AndroidActivity) => {
   snapActivityContext.activity = activity;
   snapActivityContext.events.forEach((event) => {
-    event.start(activity);
+    event.start(activity, null);
   });
 };
 
 module.onSnapApplicationLoad = (context: AndroidContentContext) => {
   snapApplicationContext.context = context;
   snapApplicationContext.events.forEach((event) => {
-    event.start(context);
+    event.start(context, null);
   });
 };
 
 module.onSnapEnhanceLoad = (context: AndroidContentContext) => {
   snapEnhancerContext.context = context;
   snapEnhancerContext.events.forEach((event) => {
-    event.start(context);
+    event.start(context, null);
   });
 };
 
-im.create(EnumUI.CONVERSATION_TOOLBOX, (builder) => {
+module.onUnload = () => {
+  unloadContext.events.forEach((event) => {
+    event.start(null, null);
+  });
+};
+
+im.create(EnumUI.CONVERSATION_TOOLBOX, (builder, args) => {
   conversationToolboxContext.events.forEach((event) => {
-    event.start(builder);
+    event.start(builder, args);
   });
 });
 
-im.create(EnumUI.FRIEND_FEED_CONTEXT_MENU, (builder) => {
+im.create(EnumUI.FRIEND_FEED_CONTEXT_MENU, (builder, args) => {
   friendFeedContext.events.forEach((event) => {
-    event.start(builder);
+    event.start(builder, args);
   });
 });
 
-im.create(EnumUI.SETTINGS, (builder) => {
+im.create(EnumUI.SETTINGS, (builder, args) => {
   settingsContext.events.forEach((event) => {
-    event.start(builder);
+    event.start(builder, args);
   });
 });

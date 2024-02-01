@@ -18,6 +18,7 @@ declare interface AndroidActivity extends AndroidContentContext {
   context: AndroidContentContext;
   intent: AndroidContentIntent;
   savedInstanceState: AndroidActivityBundle | null;
+  packageName: string;
 
   onCreate(savedInstanceState: AndroidActivityBundle | null): void;
   onStart(): void;
