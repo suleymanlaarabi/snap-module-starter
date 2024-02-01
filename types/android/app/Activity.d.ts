@@ -1,3 +1,5 @@
+import { AndroidContentContext } from "../content/Context";
+
 declare interface AndroidActivityBundle {
   [key: string]: any;
 }
@@ -12,7 +14,7 @@ declare interface AndroidActivityKeyEvent {}
 
 declare interface AndroidActivityMotionEvent {}
 
-declare interface AndroidActivity {
+declare interface AndroidActivity extends AndroidContentContext {
   context: AndroidContentContext;
   intent: AndroidContentIntent;
   savedInstanceState: AndroidActivityBundle | null;
@@ -24,6 +26,8 @@ declare interface AndroidActivity {
   onStop(): void;
   onDestroy(): void;
   onRestart(): void;
+
+  runOnUiThread(call: () => any): void;
 
   onCreateOptionsMenu(menu: AndroidActivityMenu): boolean;
   onOptionsItemSelected(item: AndroidActivityMenuItem): boolean;

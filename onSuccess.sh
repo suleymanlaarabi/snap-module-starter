@@ -24,6 +24,8 @@ var config = require(\"config\");
 var im = require(\"interface-manager\");
 var ipc = require(\"ipc\");
 var javaInterface = require(\"java-interfaces\");
+var hooker = require(\"hooker\");
+
 "
 
 if [ ! -e "$fichier_js" ]; then

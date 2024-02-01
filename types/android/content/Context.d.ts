@@ -1,3 +1,5 @@
+import { Database } from "../database/Database";
+
 // Types auxiliaires pour simuler certains aspects d'Android en TypeScript
 interface Resources {
   // ...
@@ -59,6 +61,8 @@ declare interface AndroidContentContext {
   getAssets(): AssetManager;
   getContentResolver(): ContentResolver;
   getSystemServiceName(serviceClass: any): string | null;
+
+  openOrCreateDatabase(url: string, mode: number, cursor: any): Database;
 
   // ... Plus de méthodes et propriétés selon les besoins
 }

@@ -3,7 +3,7 @@ import { onSnapEnhancerLoadCalls } from "./loader/snapEnhanceLoader";
 import { onSnapActivityLoadCalls } from "./loader/snapMainActivityLoader";
 
 export default function start() {
-  onSnapActivityLoadCalls.events.push(() => {
+  onSnapActivityLoadCalls.events.push((activity) => {
     shortToast("Snap Activiter launched");
   });
   onSnapApplicationLoadCalls.events.push(() => {

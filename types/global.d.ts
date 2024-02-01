@@ -1,5 +1,5 @@
 import { Config } from "../data.types/config";
-import { Class } from "../data.types/hooker";
+import { Class, Hooker } from "../data.types/hooker";
 import { InterfaceManager } from "../data.types/interface-manager";
 
 import { IPC } from "../data.types/ipc";
@@ -14,6 +14,7 @@ declare global {
   const javaInterfaces: JavaInterface;
   const ipc: IPC;
   const messaging: Messaging;
+  const hooker: Hooker;
 
   interface JavaType {
     newInstance(...args: any[]): any;
